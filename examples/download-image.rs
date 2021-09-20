@@ -1,16 +1,19 @@
 use anyhow::Result;
+use cached::proc_macro::cached;
 use std::fs::File;
 use std::io::Write;
 
 use oci_distribution::{ manifest, secrets::RegistryAuth, Client};
 
+#[cached(size=5, time=3600, result = true)]
+fn cached_pull_wasm_module(username: String, password: String, reference: String) -> Result<Vec<u8>> {
+    return pull_wasm_module(username, password, reference);
+}
+
 #[tokio::main(flavor = "current_thread")]
-async fn main() -> Result<()> {
+async fn pull_wasm_module(username: String, password: String, reference: String) -> Result<Vec<u8>> {
     env_logger::init();
 
-    let username = std::env::args().nth(1).expect("missing username");
-    let password = std::env::args().nth(2).expect("missing password");
-    let reference = std::env::args().nth(3).expect("missing image name");
     let reference = reference.parse()?;
     dbg!(&reference);
 
@@ -31,8 +34,14 @@ async fn main() -> Result<()> {
     println!("Downloaded {}", img.digest());
 
     let layer = img.layers.get(0).unwrap();
-    let data = layer.data.clone();
-    let mut file = File::create("module.wasm")?;
+    return Ok(layer.data.clone());
+}
+
+fn main() {
+    let username = std::env::args().nth(1).expect("missing username");
+    let password = std::env::args().nth(2).expect("missing password");
+    let reference = std::env::args().nth(3).expect("missing image name");
+    let data = cached_pull_wasm_module(username, password, reference).unwrap();
+    let mut file = File::create("module.wasm").unwrap();
     file.write(&data);
-    Ok(())
 }
