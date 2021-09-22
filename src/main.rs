@@ -5,7 +5,10 @@ use std::io::Write;
 
 use oci_distribution::{ manifest, secrets::RegistryAuth, Client};
 
-#[cached(size=5, time=3600, result = true)]
+// The size of the cache is 5.
+// Entries stay for no more than an hour.
+// Only `Ok` results are cached.
+#[cached(size=5, time=3600, result=true)]
 fn cached_pull_wasm_module(username: String, password: String, reference: String) -> Result<Vec<u8>> {
     return pull_wasm_module(username, password, reference);
 }
@@ -36,7 +39,6 @@ async fn pull_wasm_module(username: String, password: String, reference: String)
 }
 
 fn main() {
-    env_logger::init();
     let username = std::env::args().nth(1).expect("missing username");
     let password = std::env::args().nth(2).expect("missing password");
     let reference = std::env::args().nth(3).expect("missing image name");

@@ -5,4 +5,4 @@ if [ $# -ne 3 ];
     exit
 fi
 
-cargo run --example download-image -- $1 $2 $3
+cargo run $1 $2 $3
