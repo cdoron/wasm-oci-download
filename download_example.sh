@@ -5,4 +5,4 @@ if [ $# -ne 3 ];
     exit
 fi
 
-RUST_LOG=oci_distribution=trace cargo run --example download-image -- $1 $2 $3
+cargo run --example download-image -- $1 $2 $3

@@ -12,10 +12,8 @@ fn cached_pull_wasm_module(username: String, password: String, reference: String
 
 #[tokio::main(flavor = "current_thread")]
 async fn pull_wasm_module(username: String, password: String, reference: String) -> Result<Vec<u8>> {
-    env_logger::init();
-
     let reference = reference.parse()?;
-    dbg!(&reference);
+    //dbg!(&reference);
 
     let mut client = Client::default();
     let registry_auth = RegistryAuth::Basic(username.parse()?, password.parse()?);
@@ -38,6 +36,7 @@ async fn pull_wasm_module(username: String, password: String, reference: String)
 }
 
 fn main() {
+    env_logger::init();
     let username = std::env::args().nth(1).expect("missing username");
     let password = std::env::args().nth(2).expect("missing password");
     let reference = std::env::args().nth(3).expect("missing image name");
