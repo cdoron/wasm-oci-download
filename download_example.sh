@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ $# -ne 3 ];
-    then echo "Usage: "$0" [username] [password] [wasm-oci-image]"
+if [ $# -ne 1 ];
+    then echo "Usage: "$0" [yaml_filename]"
     exit
 fi
 
-cargo run $1 $2 $3
+cargo run $1
