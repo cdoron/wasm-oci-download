@@ -7,12 +7,19 @@ struct Transformation {
     username: String,
     password: String,
     wasm_image: String,
+    configuration: Option<String>,
 }
 
 fn load_single_transformation(entity: serde_yaml::Value) {
     let t: Transformation = serde_yaml::from_value(entity).unwrap();
     println!("Trying to obtain WASM Module: {}", t.name);
     let _wasm_binary = oci_cache::cached_pull_wasm_module(t.username, t.password, t.wasm_image);
+
+    if t.configuration.is_some() {
+        println!("Configuration: {}", t.configuration.unwrap());
+    } else {
+        println!("Configuration: Empty Configuration");
+    }
  }
 
 fn traverse_transformations(s: String) {

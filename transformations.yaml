@@ -3,6 +3,10 @@ transformations:
     username: the-mesh-for-data
     password: XXX
     wasm_image: ghcr.io/the-mesh-for-data/krustlet-tutorial:v1.0.0
+    configuration:  |
+      {
+        "columns": ["name", "age", "address"]
+      }
   - name: second_transformation
     username: the-mesh-for-data
     password: XXX
