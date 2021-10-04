@@ -4,8 +4,8 @@ use serde::{Serialize, Deserialize};
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 struct Transformation {
     name: String,
-    username: String,
-    password: String,
+    username: Option<String>,
+    password: Option<String>,
     wasm_image: String,
     configuration: Option<String>,
 }

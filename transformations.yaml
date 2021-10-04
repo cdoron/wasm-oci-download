@@ -1,7 +1,5 @@
 transformations:
   - name: first_transformation
-    username: the-mesh-for-data
-    password: XXX
     wasm_image: ghcr.io/the-mesh-for-data/krustlet-tutorial:v1.0.0
     configuration:  |
       {
@@ -12,6 +10,4 @@ transformations:
     password: XXX
     wasm_image: ghcr.io/the-mesh-for-data/wasm1:v1
   - name: third_transformation
-    username: the-mesh-for-data
-    password: XXX
     wasm_image: ghcr.io/the-mesh-for-data/krustlet-tutorial:v1.0.0
