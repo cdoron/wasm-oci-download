@@ -4,8 +4,7 @@ use serde::{Serialize, Deserialize};
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 struct Transformation {
     name: String,
-    username: Option<String>,
-    password: Option<String>,
+    credentials_variable: Option<String>,
     wasm_image: String,
     configuration: Option<String>,
 }
@@ -13,7 +12,7 @@ struct Transformation {
 fn load_single_transformation(entity: serde_yaml::Value) {
     let t: Transformation = serde_yaml::from_value(entity).unwrap();
     println!("Trying to obtain WASM Module: {}", t.name);
-    let _wasm_binary = oci_cache::cached_pull_wasm_module(t.username, t.password, t.wasm_image);
+    let _wasm_binary = oci_cache::cached_pull_wasm_module(t.credentials_variable, t.wasm_image);
 
     if t.configuration.is_some() {
         println!("Configuration: {}", t.configuration.unwrap());

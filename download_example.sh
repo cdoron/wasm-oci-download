@@ -5,4 +5,6 @@ if [ $# -ne 1 ];
     exit
 fi
 
+export CREDENTIALS="{\"auths\":{\"ghcr.io\":{\"username\":\"the-mesh-for-data\",\"password\":\"XXX\",\"auth\":\"YYY\"}}}"
+
 cargo run $1
